@@ -11,19 +11,34 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
 from pathlib import Path
+import django_on_heroku
+import environ
+# from corsheaders.defaults import default_headers
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+env = environ.Env(
+    # set casting, default value
+    DEBUG=(bool, False)
+)
+
+# Take environment variables from .env file
+environ.Env.read_env()
+
+# False if not in os.environ because of casting above
+DEBUG = env('DEBUG')
+# SECURITY WARNING: don't run with debug turned on in production!
+# DEBUG = True
 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-+cq0@k4#q=eu^b^178qlm7xz=0(qw!e$zgq@yoph!9!j+0h_!g'
+# SECRET_KEY = 'django-insecure-+cq0@k4#q=eu^b^178qlm7xz=0(qw!e$zgq@yoph!9!j+0h_!g'
+SECRET_KEY = env('SECRET_KEY')
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
 
 ALLOWED_HOSTS = []
 
@@ -37,6 +52,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
+    # 'rest_framework.authtoken',
+    # 'djoser',
+    'django_filters',
+    'django_extensions',
+    'commutilator_api',
 ]
 
 MIDDLEWARE = [
@@ -121,3 +142,17 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+django_on_heroku.settings(locals())
+del DATABASES['default']['OPTIONS']['sslmode']
+
+# REST_FRAMEWORK = {
+#     'DEFAULT_AUTHENTICATION_CLASSES': (
+#         'rest_framework.authentication.TokenAuthentication',),
+#     'DEFAULT_PAGINATION_CLASS': (
+#         'rest_framework.pagination.PageNumberPagination'),
+#     'PAGE_SIZE': 20
+# }
+
+# # For django-cors-headers
+# CORS_ALLOW_ALL_ORIGINS = True

@@ -5,8 +5,15 @@ name = "pypi"
 
 [packages]
 djangorestframework = "*"
+django = "*"
+django-environ = "*"
+django-extensions = "*"
+django-filter = "*"
+django-on-heroku = "*"
+gunicorn = "*"
 
 [dev-packages]
+flake8 = "*"
 
 [requires]
 python_version = "3.10"
