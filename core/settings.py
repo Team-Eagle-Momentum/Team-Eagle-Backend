@@ -32,11 +32,6 @@ DEBUG = env('DEBUG')
 # DEBUG = True
 
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
-# SECRET_KEY = 'django-insecure-+cq0@k4#q=eu^b^178qlm7xz=0(qw!e$zgq@yoph!9!j+0h_!g'
 SECRET_KEY = env('SECRET_KEY')
 
 
@@ -53,8 +48,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    # 'rest_framework.authtoken',
-    # 'djoser',
     'django_filters',
     'django_extensions',
     'commutilator_api',
@@ -134,7 +127,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [BASE_DIR / "static"]
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
+# STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
 
 
 # Default primary key field type
@@ -142,8 +135,10 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+# Configure Django App for Heroku
 django_on_heroku.settings(locals())
 del DATABASES['default']['OPTIONS']['sslmode']
+
 
 # REST_FRAMEWORK = {
 #     'DEFAULT_AUTHENTICATION_CLASSES': (
