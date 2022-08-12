@@ -36,5 +36,5 @@ class Result(TimeStamp):
     annual = models.IntegerField(null=True) 
     date = models.DateTimeField(auto_now=True)
     title = models.TextField(max_length=400)
-    vehicle = models.OneToOneField(Vehicle, on_delete=models.CASCADE, null=True)
-    commute = models.OneToOneField(Commute, on_delete=models.CASCADE, null=True)
+    vehicle = models.OneToOneField('Vehicle', on_delete=models.CASCADE, null=True)
+    commute = models.OneToOneField('Commute', on_delete=models.CASCADE, null=True)
