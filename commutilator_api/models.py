@@ -1,6 +1,4 @@
-from sqlite3 import Timestamp
 from django.db import models
-
 
 # Create your models here.
 class TimeStamp(models.Model):
@@ -11,14 +9,14 @@ class TimeStamp(models.Model):
         abstract = True
 
 
-class Vehicle(Timestamp):
+class Vehicle(TimeStamp):
     make = models.IntegerField(null=True)
     model = models.IntegerField(null=True)
     year = models.IntegerField(null=True)
     mpg = models.IntegerField(null=True)
 
 
-class Commute(Timestamp):
+class Commute(TimeStamp):
     start_location = models.TextField(max_length=400)
     end_location = models.TextField(max_length=400)
     distance = models.IntegerField()
@@ -38,3 +36,9 @@ class Result(TimeStamp):
     title = models.TextField(max_length=400)
     vehicle = models.OneToOneField('Vehicle', on_delete=models.CASCADE, null=True)
     commute = models.OneToOneField('Commute', on_delete=models.CASCADE, null=True)
+
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields=['vehicle', 'commute'], name='unique_result')
+        ]
