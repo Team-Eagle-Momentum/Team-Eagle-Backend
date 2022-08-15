@@ -34,5 +34,13 @@ class WeeklyResult(RetrieveAPIView):
     queryset = Result.objects.all()
     serializer_class = ResultSerializer
 
+    # def perform_create(self, serializer):
+    #     serializer.save(weekly=(1/result.vehicle.mpg)*float(commute.distance)*float(commute.avg_gas_commute)*float(commute.days_per_week_commuting))
+    
     # formula for calculating weekly result
     # inverse of MPG * distance * price * days/week
+    # MPG = vehicle.mpg
+    # distance = commute.distance
+    # price = commute.avg_gas_commute
+    # days = commute.days_per_week_commuting
+    # (1/vehicle.mpg)*float(commute.distance)*float(commute.avg_gas_commute)*float(commute.days_per_week_commuting)
