@@ -17,8 +17,8 @@ class Vehicle(TimeStamp):
 
 
 class Commute(TimeStamp):
-    start_location = models.TextField(max_length=400)
-    end_location = models.TextField(max_length=400)
+    start_location = models.Charfield(max_length=255)
+    end_location = models.CharField(max_length=255)
     distance = models.IntegerField()
     days_per_week_commuting = models.IntegerField()
     start_avg_gas = models.IntegerField(null=True)
@@ -33,7 +33,7 @@ class Result(TimeStamp):
     monthly = models.IntegerField(null=True) 
     annual = models.IntegerField(null=True) 
     date = models.DateTimeField(auto_now=True)
-    title = models.TextField(max_length=400)
+    title = models.CharField(max_length=255)
     vehicle = models.OneToOneField('Vehicle', on_delete=models.CASCADE, null=True)
     commute = models.OneToOneField('Commute', on_delete=models.CASCADE, null=True)
 
