@@ -2,12 +2,12 @@
 # from django.shortcuts import get_object_or_404
 
 from rest_framework.decorators import api_view
-from rest_framework.generics import CreateAPIView
+from rest_framework.generics import CreateAPIView, RetrieveAPIView
 # from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
 from .models import Result
-from .serializers import CalculatorSerializer
+from .serializers import CalculatorSerializer, ResultSerializer
 
 
 @api_view(['GET'])
@@ -18,7 +18,7 @@ def welcome(request):
     })
 
 
-# allows POST of data to return weekly result
+# allows POST of data to calculate
 class Calculator(CreateAPIView):
     queryset = Result.objects.all()
     serializer_class = CalculatorSerializer
@@ -27,3 +27,12 @@ class Calculator(CreateAPIView):
         serializer.save(user=self.request.user)
         # when a Result object is saved,
         # the user is set as the user that made the request
+
+
+# allows GET of weekly result
+class WeeklyResult(RetrieveAPIView):
+    queryset = Result.objects.all()
+    serializer_class = ResultSerializer
+
+    # formula for calculating weekly result
+    # inverse of MPG * distance * price * days/week
