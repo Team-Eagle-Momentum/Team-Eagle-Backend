@@ -15,7 +15,10 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from commutilator_api import views as commutilator_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', commutilator_views.welcome),
+    path('calc/', commutilator_views.Calculator.as_view(), name='calculator'),
 ]

@@ -17,7 +17,7 @@ class Vehicle(TimeStamp):
 
 
 class Commute(TimeStamp):
-    start_location = models.Charfield(max_length=255)
+    start_location = models.CharField(max_length=255)
     end_location = models.CharField(max_length=255)
     distance = models.IntegerField()
     days_per_week_commuting = models.IntegerField()
@@ -27,18 +27,21 @@ class Commute(TimeStamp):
 
 
 class Result(TimeStamp):
-    user = models.ForeignKey('auth.user', related_name='user', on_delete=models.CASCADE)
-    daily = models.IntegerField(null=True) 
-    weekly = models.IntegerField(null=True) 
-    monthly = models.IntegerField(null=True) 
-    annual = models.IntegerField(null=True) 
+    user = models.ForeignKey('auth.user', related_name='user',
+                             on_delete=models.CASCADE)
+    daily = models.IntegerField(null=True)
+    weekly = models.IntegerField(null=True)
+    monthly = models.IntegerField(null=True)
+    annual = models.IntegerField(null=True)
     date = models.DateTimeField(auto_now=True)
     title = models.CharField(max_length=255)
-    vehicle = models.OneToOneField('Vehicle', on_delete=models.CASCADE, null=True)
-    commute = models.OneToOneField('Commute', on_delete=models.CASCADE, null=True)
-
+    vehicle = models.OneToOneField('Vehicle', on_delete=models.CASCADE,
+                                   null=True)
+    commute = models.OneToOneField('Commute', on_delete=models.CASCADE,
+                                   null=True)
 
     class Meta:
         constraints = [
-            models.UniqueConstraint(fields=['vehicle', 'commute'], name='unique_result')
+            models.UniqueConstraint(fields=['vehicle', 'commute'],
+                                    name='unique_result')
         ]
