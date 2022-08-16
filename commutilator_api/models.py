@@ -14,7 +14,7 @@ class Vehicle(TimeStamp):
     make = models.CharField(max_length=255, blank=True, null=True)
     model = models.CharField(max_length=255, blank=True, null=True)
     year = models.IntegerField(blank=True, null=True)
-    mpg = models.IntegerField(null=True)
+    mpg = models.IntegerField()
 
 
 class Commute(TimeStamp):
@@ -46,7 +46,7 @@ class Result(TimeStamp):
 
 class CalculationData(TimeStamp):
     user = models.ForeignKey('auth.user', related_name='calculations',
-                             on_delete=models.CASCADE)
+                             on_delete=models.CASCADE, null=True)
     vehicle = models.OneToOneField(Vehicle, on_delete=models.CASCADE)
     commute = models.OneToOneField(Commute, on_delete=models.CASCADE)
     result = models.OneToOneField(Result, on_delete=models.CASCADE, null=True)
