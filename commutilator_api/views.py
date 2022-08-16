@@ -2,6 +2,7 @@
 # from django.shortcuts import get_object_or_404
 
 from datetime import date
+import calendar
 
 from rest_framework.decorators import api_view
 from rest_framework.generics import CreateAPIView
@@ -41,11 +42,20 @@ class CreateCalculationData(CreateAPIView):
         commute = Commute.objects.get(pk=self.request.data['commute'])
         vehicle = Vehicle.objects.get(pk=self.request.data['vehicle'])
         today = date.today()
-        daily_result = round((((commute.distance * 2) / vehicle.mpg) * commute.avg_gas_commute) * commute.days_per_week_commuting, 2)
-        weekly_result = round(((commute.distance / vehicle.mpg) * commute.avg_gas_commute) * commute.days_per_week_commuting, 2)
-        annual_result = round(((commute.distance / vehicle.mpg) * commute.avg_gas_commute) * commute.days_per_week_commuting * 52, 2)
-        result_object = Result.objects.create(weekly=weekly_result,
+
+        daily_result = round((((commute.distance * 2) / vehicle.mpg) * commute.avg_gas_commute), 2)
+
+        weekly_result = round((((commute.distance * 2) / vehicle.mpg) * commute.avg_gas_commute) * commute.days_per_week_commuting, 2)
+
+        monthly_result = round((((commute.distance * 2) / vehicle.mpg) * commute.avg_gas_commute) * (commute.days_per_week_commuting * (len(calendar.monthcalendar(today.year, today.month)))), 2)
+
+        annual_result = round((((commute.distance * 2) / vehicle.mpg) * commute.avg_gas_commute) * commute.days_per_week_commuting * 52, 2)
+
+        result_object = Result.objects.create(daily=daily_result,
+                                              weekly=weekly_result,
+                                              monthly=monthly_result,
                                               annual=annual_result)
+
         serializer.save(commute=commute, vehicle=vehicle, result=result_object)
 
 
