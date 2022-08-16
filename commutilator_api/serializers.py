@@ -1,11 +1,19 @@
 from rest_framework import serializers
-from .models import Vehicle, Commute, Result
+from .models import CalculationData, Vehicle, Commute, Result
 
 
 class VehicleSerializer(serializers.ModelSerializer):
+    make = serializers.PrimaryKeyRelatedField(many=False,
+                                              queryset=Vehicle.objects.all())
+    model = serializers.PrimaryKeyRelatedField(many=False,
+                                               queryset=Vehicle.objects.all())
+    year = serializers.PrimaryKeyRelatedField(many=False,
+                                              queryset=Vehicle.objects.all())
+    mpg = serializers.PrimaryKeyRelatedField(many=False,
+                                             queryset=Vehicle.objects.all())
 
     class Meta:
-        model = Vehicle
+        model = CalculationData
         fields = [
             'make',
             'model',

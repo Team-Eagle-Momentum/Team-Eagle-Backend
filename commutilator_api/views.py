@@ -6,7 +6,7 @@ from rest_framework.generics import CreateAPIView, RetrieveAPIView
 # from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
-from .models import Vehicle, Commute, Result
+from .models import CalculationData
 from .serializers import VehicleSerializer, CommuteSerializer, ResultSerializer
 
 
@@ -20,20 +20,22 @@ def welcome(request):
 
 # allows POST of vehicle data
 class CreateVehicle(CreateAPIView):
-    queryset = Vehicle.objects.all()
+    queryset = CalculationData.objects.all()
     serializer_class = VehicleSerializer
 
 
 # allows POST of commute data
 class CreateCommute(CreateAPIView):
-    queryset = Commute.objects.all()
-    serializer_class = CommuteSerializer
+    pass
+    # queryset = Commute.objects.all()
+    # serializer_class = CommuteSerializer
 
 
 # allows GET of result data
 class ResultDetail(RetrieveAPIView):
-    queryset = Result.objects.all()
-    serializer_class = ResultSerializer
+    pass
+    # queryset = Result.objects.all()
+    # serializer_class = ResultSerializer
 
     # def perform_create(self, serializer):
     #     serializer.save(weekly=(1/result.vehicle.mpg)*float(commute.distance)*float(commute.avg_gas_commute)*float(commute.days_per_week_commuting))

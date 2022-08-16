@@ -32,8 +32,6 @@ class Commute(TimeStamp):
 
 
 class Result(TimeStamp):
-    user = models.ForeignKey('auth.user', related_name='user',
-                             on_delete=models.CASCADE)
     daily = models.DecimalField(max_digits=10, decimal_places=2,
                                 null=True)
     weekly = models.DecimalField(max_digits=10, decimal_places=2,
@@ -44,13 +42,17 @@ class Result(TimeStamp):
                                  null=True)
     date = models.DateTimeField(auto_now=True)
     title = models.CharField(max_length=255)
-    vehicle = models.OneToOneField(Vehicle, on_delete=models.CASCADE,
-                                   null=True)
-    commute = models.OneToOneField(Commute, on_delete=models.CASCADE,
-                                   null=True)
+
+
+class CalculationData(TimeStamp):
+    user = models.ForeignKey('auth.user', related_name='calculations',
+                             on_delete=models.CASCADE)
+    vehicle = models.OneToOneField(Vehicle, on_delete=models.CASCADE)
+    commute = models.OneToOneField(Commute, on_delete=models.CASCADE)
+    result = models.OneToOneField(Result, on_delete=models.CASCADE, null=True)
 
     class Meta:
         constraints = [
-            models.UniqueConstraint(fields=['vehicle', 'commute'],
+            models.UniqueConstraint(fields=['vehicle', 'commute', 'result'],
                                     name='unique_result')
         ]
