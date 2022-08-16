@@ -60,6 +60,6 @@ class CreateCalculationData(CreateAPIView):
 
 
 # allows GET of result data
-class Result(RetrieveAPIView):
+class ResultDetail(RetrieveAPIView):
     queryset = Result.objects.all()
     serializer_class = ResultSerializer
