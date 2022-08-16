@@ -3,21 +3,23 @@ from .models import CalculationData, Vehicle, Commute, Result
 
 
 class VehicleSerializer(serializers.ModelSerializer):
-    make = serializers.PrimaryKeyRelatedField(many=False,
-                                              queryset=Vehicle.objects.all())
-    model = serializers.PrimaryKeyRelatedField(many=False,
-                                               queryset=Vehicle.objects.all())
-    year = serializers.PrimaryKeyRelatedField(many=False,
-                                              queryset=Vehicle.objects.all())
-    mpg = serializers.PrimaryKeyRelatedField(many=False,
-                                             queryset=Vehicle.objects.all())
+    mpg = serializers.IntegerField(source='vehicle.mpg')
+    # model = serializers.PrimaryKeyRelatedField(many=False,
+    #                                            queryset=CalculationData.objects.all())
+    # year = serializers.PrimaryKeyRelatedField(many=False,
+    #                                           queryset=CalculationData.objects.all())
+    # mpg = serializers.PrimaryKeyRelatedField(many=False,
+    #                                          queryset=CalculationData.objects.all())
+
+    def create(self):
+        return Vehicle.objects.create
 
     class Meta:
         model = CalculationData
         fields = [
-            'make',
-            'model',
-            'year',
+            # 'make',
+            # 'model',
+            # 'year',
             'mpg',
         ]
 
