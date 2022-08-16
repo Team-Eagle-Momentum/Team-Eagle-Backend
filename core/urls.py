@@ -24,6 +24,8 @@ urlpatterns = [
          name='vehicle'),
     path('commute/', commutilator_views.CreateCommute.as_view(),
          name='commute'),
-    path('result/', commutilator_views.CreateCalculationData.as_view(),
+    path('calc/', commutilator_views.CreateCalculationData.as_view(),
+         name='calc'),
+    path('result/<int:pk>/', commutilator_views.Result.as_view(),
          name='result'),
 ]

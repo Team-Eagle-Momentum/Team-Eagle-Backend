@@ -5,19 +5,19 @@ from datetime import date
 import calendar
 
 from rest_framework.decorators import api_view
-from rest_framework.generics import CreateAPIView
+from rest_framework.generics import CreateAPIView, RetrieveAPIView
 # from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
 from commutilator_api.models import CalculationData, Commute, Result, Vehicle
-from commutilator_api.serializers import CalculationDataSerializer, VehicleSerializer, CommuteSerializer
+from commutilator_api.serializers import CalculationDataSerializer, VehicleSerializer, CommuteSerializer, ResultSerializer
 
 
 @api_view(['GET'])
 def welcome(request):
     return Response({
         'team': 'Team Eagle',
-        'description': 'Welcome to our app 👋'
+        'message': 'Welcome to our app 👋'
     })
 
 
@@ -36,7 +36,7 @@ class CreateCommute(CreateAPIView):
 # allows POST of calcuation data
 class CreateCalculationData(CreateAPIView):
     queryset = CalculationData.objects.all()
-    serializer_class = CalculationDataSerializer 
+    serializer_class = CalculationDataSerializer
 
     def perform_create(self, serializer):
         commute = Commute.objects.get(pk=self.request.data['commute'])
@@ -60,10 +60,6 @@ class CreateCalculationData(CreateAPIView):
 
 
 # allows GET of result data
-# class ResultDetail(RetrieveAPIView):
-#     pass
-    # queryset = Result.objects.all()
-    # serializer_class = ResultSerializer
-
-    # def perform_create(self, serializer):
-    #     serializer.save(weekly=(1/result.vehicle.mpg)*float(commute.distance)*float(commute.avg_gas_commute)*float(commute.days_per_week_commuting))
+class Result(RetrieveAPIView):
+    queryset = Result.objects.all()
+    serializer_class = ResultSerializer
