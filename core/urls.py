@@ -20,5 +20,10 @@ from commutilator_api import views as commutilator_views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', commutilator_views.welcome),
-    path('calc/', commutilator_views.Calculator.as_view(), name='calculator'),
+    path('vehicle/', commutilator_views.CreateVehicle.as_view(),
+         name='vehicle'),
+    path('commute/', commutilator_views.CreateCommute.as_view(),
+         name='commute'),
+    path('result/<int:pk>/', commutilator_views.ResultDetail.as_view(),
+         name='result'),
 ]

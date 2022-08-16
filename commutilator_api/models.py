@@ -11,9 +11,9 @@ class TimeStamp(models.Model):
 
 
 class Vehicle(TimeStamp):
-    make = models.CharField(max_length=255, null=True)
-    model = models.CharField(max_length=255, null=True)
-    year = models.IntegerField(null=True)
+    make = models.CharField(max_length=255, blank=True, null=True)
+    model = models.CharField(max_length=255, blank=True, null=True)
+    year = models.IntegerField(blank=True, null=True)
     mpg = models.IntegerField(null=True)
 
 

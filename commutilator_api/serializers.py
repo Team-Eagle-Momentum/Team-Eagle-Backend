@@ -25,7 +25,6 @@ class CommuteSerializer(serializers.ModelSerializer):
             'days_per_week_commuting',
             'start_avg_gas',
             'end_avg_gas',
-            'avg_gas_commute',
         ]
 
 

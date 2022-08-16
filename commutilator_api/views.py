@@ -6,8 +6,8 @@ from rest_framework.generics import CreateAPIView, RetrieveAPIView
 # from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
-from .models import Result
-from .serializers import CalculatorSerializer, ResultSerializer
+from .models import Vehicle, Commute, Result
+from .serializers import VehicleSerializer, CommuteSerializer, ResultSerializer
 
 
 @api_view(['GET'])
@@ -18,25 +18,26 @@ def welcome(request):
     })
 
 
-# allows POST of data to calculate
-class Calculator(CreateAPIView):
-    queryset = Result.objects.all()
-    serializer_class = CalculatorSerializer
-
-    def perform_create(self, serializer):
-        serializer.save(user=self.request.user)
-        # when a Result object is saved,
-        # the user is set as the user that made the request
+# allows POST of vehicle data
+class CreateVehicle(CreateAPIView):
+    queryset = Vehicle.objects.all()
+    serializer_class = VehicleSerializer
 
 
-# allows GET of weekly result
-class WeeklyResult(RetrieveAPIView):
+# allows POST of commute data
+class CreateCommute(CreateAPIView):
+    queryset = Commute.objects.all()
+    serializer_class = CommuteSerializer
+
+
+# allows GET of result data
+class ResultDetail(RetrieveAPIView):
     queryset = Result.objects.all()
     serializer_class = ResultSerializer
 
     # def perform_create(self, serializer):
     #     serializer.save(weekly=(1/result.vehicle.mpg)*float(commute.distance)*float(commute.avg_gas_commute)*float(commute.days_per_week_commuting))
-    
+
     # formula for calculating weekly result
     # inverse of MPG * distance * price * days/week
     # MPG = vehicle.mpg
