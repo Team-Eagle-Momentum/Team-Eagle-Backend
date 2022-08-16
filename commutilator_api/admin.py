@@ -1,3 +1,7 @@
 from django.contrib import admin
+from .models import Vehicle, Commute, Result, CalculationData
 
-# Register your models here.
+admin.site.register(Vehicle)
+admin.site.register(Commute)
+admin.site.register(Result)
+admin.site.register(CalculationData)
