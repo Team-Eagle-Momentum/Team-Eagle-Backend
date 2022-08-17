@@ -52,8 +52,8 @@ class CalculationData(TimeStamp):
     commute = models.OneToOneField(Commute, on_delete=models.CASCADE)
     result = models.OneToOneField(Result, on_delete=models.CASCADE, null=True)
 
-    class Meta:
-        constraints = [
-            models.UniqueConstraint(fields=['vehicle', 'commute', 'result'],
-                                    name='unique_result')
-        ]
+    # class Meta:
+    #     constraints = [
+    #         models.UniqueConstraint(fields=['vehicle', 'commute', 'result'],
+    #                                 name='unique_result')
+    #     ]
