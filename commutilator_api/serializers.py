@@ -19,18 +19,21 @@ class CalculationDataSerializer(serializers.ModelSerializer):
     user = serializers.ReadOnlyField(source='user.username')
 
     class Meta:
-        model = CalculationData 
+        model = CalculationData
         fields = '__all__'
         depth = 1
 
 
-class ResultSerializer(serializers.ModelSerializer):
+class WeeklyResultSerializer(serializers.ModelSerializer):
     class Meta:
         model = Result
         fields = [
             'id',
-            'daily',
             'weekly',
-            'monthly',
-            'annual',
         ]
+
+
+class ResultDetailSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Result
+        fields = '__all__'

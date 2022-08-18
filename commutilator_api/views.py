@@ -6,11 +6,11 @@ import calendar
 
 from rest_framework.decorators import api_view
 from rest_framework.generics import CreateAPIView, RetrieveAPIView
-# from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
 from commutilator_api.models import CalculationData, Commute, Result, Vehicle
-from commutilator_api.serializers import CalculationDataSerializer, VehicleSerializer, CommuteSerializer, ResultSerializer
+from commutilator_api.serializers import CalculationDataSerializer, VehicleSerializer, CommuteSerializer, WeeklyResultSerializer, ResultDetailSerializer
 
 
 @api_view(['GET'])
@@ -56,10 +56,18 @@ class CreateCalculationData(CreateAPIView):
                                               monthly=monthly_result,
                                               annual=annual_result)
 
-        serializer.save(commute=commute, vehicle=vehicle, result=result_object)
+        serializer.save(commute=commute, vehicle=vehicle, result=result_object,
+                        user=self.request.user)
 
 
-# allows GET of result data
+# allows GET of weekly result data
+class WeeklyResult(RetrieveAPIView):
+    queryset = Result.objects.all()
+    serializer_class = WeeklyResultSerializer
+
+
+# allows GET of all result data
 class ResultDetail(RetrieveAPIView):
     queryset = Result.objects.all()
-    serializer_class = ResultSerializer
+    serializer_class = ResultDetailSerializer
+    permission_classes = [IsAuthenticated]
