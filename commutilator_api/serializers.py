@@ -15,7 +15,7 @@ class CommuteSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class PostCalculationDataSerializer(serializers.ModelSerializer):
+class CalculationDataSerializer(serializers.ModelSerializer):
     user = serializers.ReadOnlyField(source='user.username')
 
     class Meta:
@@ -27,12 +27,4 @@ class PostCalculationDataSerializer(serializers.ModelSerializer):
 class ResultDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = Result
-        fields = '__all__'
-
-
-class GetCalculationDataSerializer(serializers.ModelSerializer):
-    user = serializers.ReadOnlyField(source='user.username')
-
-    class Meta:
-        model = CalculationData
         fields = '__all__'
