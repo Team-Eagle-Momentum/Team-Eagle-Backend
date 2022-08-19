@@ -44,7 +44,7 @@ class Result(TimeStamp):
 
 
 class CalculationData(TimeStamp):
-    user = models.ForeignKey('auth.user', related_name='calculations',
+    user = models.ForeignKey('auth.user', related_name='calculations', blank=True,
                              on_delete=models.CASCADE, null=True)
     vehicle = models.OneToOneField(Vehicle, on_delete=models.CASCADE)
     commute = models.OneToOneField(Commute, on_delete=models.CASCADE)
