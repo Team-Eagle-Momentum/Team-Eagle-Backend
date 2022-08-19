@@ -1,7 +1,7 @@
 # from django.shortcuts import render
 # from django.shortcuts import get_object_or_404
 
-from datetime import date
+from datetime import date, datetime
 import calendar
 
 from rest_framework.decorators import api_view
@@ -51,9 +51,11 @@ class CreateCalculationData(CreateAPIView):
 
         annual_result = round((((commute.distance * 2) / vehicle.mpg) * commute.avg_gas_commute) * commute.days_per_week_commuting * 52, 2)
 
+        date_result_title = datetime.now()
         result_object = Result.objects.create(daily=daily_result,
                                               weekly=weekly_result,
                                               monthly=monthly_result,
+                                              title=date_result_title,
                                               annual=annual_result)
 
         serializer.save(commute=commute, vehicle=vehicle, result=result_object,
