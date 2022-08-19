@@ -30,8 +30,8 @@ urlpatterns = [
          name='commute'),
     path('calc/', commutilator_views.CreateCalculationData.as_view(),
          name='calc'),
-    path('result/<int:pk>', commutilator_views.WeeklyResult.as_view(),
+    path('result/<int:pk>', commutilator_views.ResultDetail.as_view(),
          name='result'),
-    path('detail/<int:pk>', commutilator_views.ResultDetail.as_view(),
+    path('detail/<int:pk>', commutilator_views.CalcDetail.as_view(),
          name='detail'),
 ]

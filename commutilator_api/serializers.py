@@ -24,15 +24,6 @@ class CalculationDataSerializer(serializers.ModelSerializer):
         depth = 1
 
 
-class WeeklyResultSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Result
-        fields = [
-            'id',
-            'weekly',
-        ]
-
-
 class ResultDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = Result
