@@ -10,7 +10,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
 from commutilator_api.models import CalculationData, Commute, Result, Vehicle
-from commutilator_api.serializers import CalculationDataSerializer, VehicleSerializer, CommuteSerializer, ResultDetailSerializer
+from commutilator_api.serializers import PostCalculationDataSerializer, VehicleSerializer, CommuteSerializer, ResultDetailSerializer, GetCalculationDataSerializer
 
 
 @api_view(['GET'])
@@ -36,7 +36,7 @@ class CreateCommute(CreateAPIView):
 # allows POST of calcuation data
 class CreateCalculationData(CreateAPIView):
     queryset = CalculationData.objects.all()
-    serializer_class = CalculationDataSerializer
+    serializer_class = PostCalculationDataSerializer
 
     def perform_create(self, serializer):
         commute = Commute.objects.get(pk=self.request.data['commute'])
@@ -69,7 +69,7 @@ class ResultDetail(RetrieveAPIView):
 
 
 # allows GET of all calculation data
-class CalcDetail(RetrieveAPIView):
+class AllCalcDetail(RetrieveAPIView):
     queryset = CalculationData.objects.all()
-    serializer_class = CalculationDataSerializer
+    serializer_class = GetCalculationDataSerializer
     permission_classes = [IsAuthenticated]
