@@ -1,14 +1,9 @@
-# from django.shortcuts import render
-# from django.shortcuts import get_object_or_404
-
 from datetime import date, datetime
 import calendar
-
 from rest_framework.decorators import api_view
 from rest_framework.generics import CreateAPIView, RetrieveAPIView, RetrieveUpdateDestroyAPIView
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
-
 from commutilator_api.models import CalculationData, Commute, Result, Vehicle
 from commutilator_api.serializers import CalculationDataSerializer, VehicleSerializer, CommuteSerializer, ResultDetailSerializer
 
@@ -76,3 +71,10 @@ class AllCalcDetail(RetrieveUpdateDestroyAPIView):
     def perform_update(self, serializer):
         serializer.save(user=self.request.user)
         return super().perform_update(serializer)
+
+    def retrieve(self, request, *args, **kwargs):
+        owner_qs = self.queryset.filter(user=self.request.user)
+        owner_object = owner_qs.get(pk=self.kwargs['pk'])
+        serializer = self.get_serializer(owner_object)
+        return Response(serializer.data)
+
