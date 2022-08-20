@@ -5,7 +5,7 @@ from datetime import date, datetime
 import calendar
 
 from rest_framework.decorators import api_view
-from rest_framework.generics import CreateAPIView, RetrieveAPIView
+from rest_framework.generics import CreateAPIView, RetrieveAPIView, RetrieveUpdateDestroyAPIView
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 
@@ -67,8 +67,12 @@ class ResultDetail(RetrieveAPIView):
     serializer_class = ResultDetailSerializer
 
 
-# allows GET of all calculation data
-class AllCalcDetail(RetrieveAPIView):
+# allows GET, PUT, PATCH, DELETE of calculation data
+class AllCalcDetail(RetrieveUpdateDestroyAPIView):
     queryset = CalculationData.objects.all()
     serializer_class = CalculationDataSerializer
     permission_classes = [IsAuthenticated]
+
+    def perform_update(self, serializer):
+        serializer.save(user=self.request.user)
+        return super().perform_update(serializer)
