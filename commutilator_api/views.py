@@ -1,16 +1,11 @@
-# from django.shortcuts import render
-# from django.shortcuts import get_object_or_404
-
-from datetime import date
+from datetime import date, datetime
 import calendar
-
 from rest_framework.decorators import api_view
-from rest_framework.generics import CreateAPIView, RetrieveAPIView
-# from rest_framework.permissions import IsAuthenticated
+from rest_framework.generics import CreateAPIView, RetrieveAPIView, RetrieveUpdateDestroyAPIView
 from rest_framework.response import Response
-
+from rest_framework.permissions import IsAuthenticated
 from commutilator_api.models import CalculationData, Commute, Result, Vehicle
-from commutilator_api.serializers import CalculationDataSerializer, VehicleSerializer, CommuteSerializer, ResultSerializer
+from commutilator_api.serializers import CalculationDataSerializer, VehicleSerializer, CommuteSerializer, ResultDetailSerializer
 
 
 @api_view(['GET'])
@@ -51,15 +46,35 @@ class CreateCalculationData(CreateAPIView):
 
         annual_result = round((((commute.distance * 2) / vehicle.mpg) * commute.avg_gas_commute) * commute.days_per_week_commuting * 52, 2)
 
+        date_result_title = datetime.now()
         result_object = Result.objects.create(daily=daily_result,
                                               weekly=weekly_result,
                                               monthly=monthly_result,
+                                              title=date_result_title,
                                               annual=annual_result)
 
         serializer.save(commute=commute, vehicle=vehicle, result=result_object)
 
 
-# allows GET of result data
+# allows GET of all result data
 class ResultDetail(RetrieveAPIView):
     queryset = Result.objects.all()
-    serializer_class = ResultSerializer
+    serializer_class = ResultDetailSerializer
+
+
+# allows GET, PUT, PATCH, DELETE of calculation data
+class AllCalcDetail(RetrieveUpdateDestroyAPIView):
+    queryset = CalculationData.objects.all()
+    serializer_class = CalculationDataSerializer
+    permission_classes = [IsAuthenticated]
+
+    def perform_update(self, serializer):
+        serializer.save(user=self.request.user)
+        return super().perform_update(serializer)
+
+    def retrieve(self, request, *args, **kwargs):
+        owner_qs = self.queryset.filter(user=self.request.user)
+        owner_object = owner_qs.get(pk=self.kwargs['pk'])
+        serializer = self.get_serializer(owner_object)
+        return Response(serializer.data)
+

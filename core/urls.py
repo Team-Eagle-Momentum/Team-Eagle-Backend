@@ -32,4 +32,6 @@ urlpatterns = [
          name='calc'),
     path('result/<int:pk>', commutilator_views.ResultDetail.as_view(),
          name='result'),
+    path('detail/<int:pk>', commutilator_views.AllCalcDetail.as_view(),
+         name='detail'),
 ]

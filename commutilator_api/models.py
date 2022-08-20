@@ -40,13 +40,11 @@ class Result(TimeStamp):
                                   null=True)
     annual = models.DecimalField(max_digits=10, decimal_places=2,
                                  null=True)
-    date = models.DateTimeField(auto_now=True)
     title = models.CharField(max_length=255, null=True)
-    # add default=TimeStamp.created_at to title on next branch
 
 
 class CalculationData(TimeStamp):
-    user = models.ForeignKey('auth.user', related_name='calculations',
+    user = models.ForeignKey('auth.user', related_name='calculations', blank=True,
                              on_delete=models.CASCADE, null=True)
     vehicle = models.OneToOneField(Vehicle, on_delete=models.CASCADE)
     commute = models.OneToOneField(Commute, on_delete=models.CASCADE)
