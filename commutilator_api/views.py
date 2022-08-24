@@ -1,10 +1,13 @@
 from datetime import date, datetime
 import calendar
+from rest_framework import generics, permissions
 from rest_framework.decorators import api_view
 from rest_framework.generics import CreateAPIView, RetrieveAPIView, RetrieveUpdateDestroyAPIView
 from rest_framework.response import Response
 from commutilator_api.models import CalculationData, Commute, Result, Vehicle
 from commutilator_api.serializers import CalculationDataSerializer, VehicleSerializer, CommuteSerializer, ResultDetailSerializer
+from commutilator_api.filters import IsOwnerFilterBackend
+from django_filters.rest_framework import DjangoFilterBackend
 
 
 @api_view(['GET'])
@@ -61,10 +64,18 @@ class ResultDetail(RetrieveAPIView):
     serializer_class = ResultDetailSerializer
 
 
+class AllCalcDetailList(generics.ListAPIView): 
+    queryset = CalculationData.objects.all()
+    serializer_class = CalculationDataSerializer
+    permission_classes = [permissions.IsAuthenticated]
+    filter_backends = [DjangoFilterBackend, IsOwnerFilterBackend]
+
 # allows GET, PUT, PATCH, DELETE of calculation data
 class AllCalcDetail(RetrieveUpdateDestroyAPIView):
     queryset = CalculationData.objects.all()
     serializer_class = CalculationDataSerializer
+    # TODO: add permission class after testing auth flow on frontend
+
 
     def perform_update(self, serializer):
         serializer.save(user=self.request.user)
