@@ -29,6 +29,7 @@ class Commute(TimeStamp):
                                       null=True)
     avg_gas_commute = models.DecimalField(max_digits=3, decimal_places=2,
                                           null=True)
+    directions_response = models.TextField(null=True)
 
 
 class Result(TimeStamp):
