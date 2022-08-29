@@ -64,11 +64,12 @@ class ResultDetail(RetrieveAPIView):
     serializer_class = ResultDetailSerializer
 
 
-class AllCalcDetailList(generics.ListAPIView): 
-    queryset = CalculationData.objects.all()
+class AllCalcDetailList(generics.ListAPIView):
+    queryset = CalculationData.objects.all("-created_at")
     serializer_class = CalculationDataSerializer
     permission_classes = [permissions.IsAuthenticated]
     filter_backends = [DjangoFilterBackend, IsOwnerFilterBackend]
+
 
 # allows GET, PUT, PATCH, DELETE of calculation data
 class AllCalcDetail(RetrieveUpdateDestroyAPIView):
