@@ -65,7 +65,7 @@ class ResultDetail(RetrieveAPIView):
 
 
 class AllCalcDetailList(generics.ListAPIView):
-    queryset = CalculationData.objects.all("-created_at")
+    queryset = CalculationData.objects.order_by("-created_at")
     serializer_class = CalculationDataSerializer
     permission_classes = [permissions.IsAuthenticated]
     filter_backends = [DjangoFilterBackend, IsOwnerFilterBackend]
