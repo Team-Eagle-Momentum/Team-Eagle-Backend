@@ -27,7 +27,19 @@ class CreateVehicle(CreateAPIView):
 # allows POST of commute data
 class CreateCommute(CreateAPIView):
     queryset = Commute.objects.all()
-    serializer_class = CommuteSerializer 
+    serializer_class = CommuteSerializer
+
+    def perform_create(self, serializer):
+        start_avg = self.request.data['start_avg_gas']
+        end_avg = self.request.data['end_avg_gas']
+        if start_avg == 0 and end_avg != 0:
+            avg_gas_commute = end_avg
+        elif end_avg == 0 and start_avg != 0:
+            avg_gas_commute = start_avg
+        else:
+            avg_gas_commute = ((start_avg + end_avg)/2)
+
+        serializer.save(avg_gas_commute=avg_gas_commute)
 
 
 # allows POST of calcuation data
