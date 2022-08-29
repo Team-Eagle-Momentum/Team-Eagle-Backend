@@ -32,9 +32,9 @@ class CreateCommute(CreateAPIView):
     def perform_create(self, serializer):
         start_avg = self.request.data['start_avg_gas']
         end_avg = self.request.data['end_avg_gas']
-        if start_avg == 0 and end_avg != 0:
+        if end_avg != 0 and start_avg == 0 or None:
             avg_gas_commute = end_avg
-        elif end_avg == 0 and start_avg != 0:
+        elif start_avg != 0 and end_avg == 0 or None:
             avg_gas_commute = start_avg
         else:
             avg_gas_commute = ((start_avg + end_avg)/2)
