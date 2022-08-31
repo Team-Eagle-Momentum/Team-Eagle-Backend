@@ -1,7 +1,6 @@
 from django.db import models
 
 
-# Create your models here.
 class TimeStamp(models.Model):
     created_at = models.DateTimeField(db_index=True, auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -45,8 +44,8 @@ class Result(TimeStamp):
 
 
 class CalculationData(TimeStamp):
-    user = models.ForeignKey('auth.user', related_name='calculations', blank=True,
-                             on_delete=models.CASCADE, null=True)
+    user = models.ForeignKey('auth.user', related_name='calculations',
+                             blank=True, on_delete=models.CASCADE, null=True)
     vehicle = models.OneToOneField(Vehicle, on_delete=models.CASCADE)
     commute = models.OneToOneField(Commute, on_delete=models.CASCADE)
     result = models.OneToOneField(Result, on_delete=models.CASCADE, null=True)

@@ -18,13 +18,11 @@ def welcome(request):
     })
 
 
-# allows POST of vehicle data
 class CreateVehicle(CreateAPIView):
     queryset = Vehicle.objects.all()
     serializer_class = VehicleSerializer
 
 
-# allows POST of commute data
 class CreateCommute(CreateAPIView):
     queryset = Commute.objects.all()
     serializer_class = CommuteSerializer
@@ -46,7 +44,6 @@ class CreateCommute(CreateAPIView):
         serializer.save(avg_gas_commute=avg_gas_commute)
 
 
-# allows POST of calcuation data
 class CreateCalculationData(CreateAPIView):
     queryset = CalculationData.objects.all()
     serializer_class = CalculationDataSerializer
@@ -74,7 +71,6 @@ class CreateCalculationData(CreateAPIView):
         serializer.save(commute=commute, vehicle=vehicle, result=result_object)
 
 
-# allows GET of all result data
 class ResultDetail(RetrieveAPIView):
     queryset = Result.objects.all()
     serializer_class = ResultDetailSerializer
@@ -87,12 +83,10 @@ class AllCalcDetailList(generics.ListAPIView):
     filter_backends = [DjangoFilterBackend, IsOwnerFilterBackend]
 
 
-# allows GET, PUT, PATCH, DELETE of calculation data
 class AllCalcDetail(RetrieveUpdateDestroyAPIView):
     queryset = CalculationData.objects.all()
     serializer_class = CalculationDataSerializer
     # TODO: add permission class after testing auth flow on frontend
-
 
     def perform_update(self, serializer):
         serializer.save(user=self.request.user)
@@ -103,4 +97,3 @@ class AllCalcDetail(RetrieveUpdateDestroyAPIView):
         owner_object = owner_qs.get(pk=self.kwargs['pk'])
         serializer = self.get_serializer(owner_object)
         return Response(serializer.data)
-
