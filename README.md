@@ -8,8 +8,8 @@ Base URL: [https://commutilator-api.herokuapp.com/](https://commutilator-api.her
 | POST   | `<BASE_URL>/vehicle/`    | Create vehicle object by providing mpg (model, year, and make are optional; mpg is not optional) | `{ "mpg": 23, "year": "1994", "model": "Acura", "make": "test make" }`                                                                    |
 | POST   | `<BASE_URL>/calc/`       | Create calculation object by providing vehicle id and commute id                         | `{ "commute": "2", "vehicle": "4" }`                                                                                                        |
 | GET    | `<BASE_URL>/result/<id>` | View a specific result object by id                                                | pass result object id in url, ex: `<BASE_URL>/result/4`                                                                                     |
-| GET    | `<BASE_URL>detail/` | View a list of all own calculations                                              |                                                                                      |
-| GET    | `<BASE_URL>detail/<id>` | View a specific calculation object by id                                            | pass calculation object id in url, ex: `<BASE_URL>/detail/6`                                                                                 |
+| GET    | `<BASE_URL>/detail/` | View a list of all own calculations                                              |                                                                                      |
+| GET    | `<BASE_URL>/detail/<id>` | View a specific calculation object by id                                            | pass calculation object id in url, ex: `<BASE_URL>/detail/6`                                                                                 |
 
 
 ## Authentication
